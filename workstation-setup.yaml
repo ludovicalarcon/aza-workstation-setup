@@ -1,0 +1,6 @@
+---
+- name: Setup Workstation
+  hosts: targets
+  become: true
+  roles:
+    - package-manager

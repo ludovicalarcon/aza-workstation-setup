@@ -1,0 +1,9 @@
+---
+- name: Sync package manager repo
+  pacman:
+    update_cache: yes
+
+- name: Install packages
+  pacman:
+    name: "{{ packages }}"
+    state: present

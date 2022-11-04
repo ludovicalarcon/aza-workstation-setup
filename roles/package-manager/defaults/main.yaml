@@ -1,0 +1,11 @@
+---
+packages:
+  - base-devel
+  - git
+  - neovim
+  - jq
+  - yq
+  - fzf
+  - chromium
+  - plank
+  - gnome-tweak-tool

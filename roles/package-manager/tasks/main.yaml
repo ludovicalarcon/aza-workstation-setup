@@ -1,0 +1,4 @@
+---
+- name: Install package with pacman
+  ansible.builtin.include_tasks: pacman.yaml
+  when: ansible_os_family == "Archlinux"
