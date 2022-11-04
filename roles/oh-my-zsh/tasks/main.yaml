@@ -1,0 +1,41 @@
+---
+- name: Check existence of .oh-my-zsh
+  ansible.builtin.stat:
+    path: "{{ home }}/.oh-my-zsh"
+  register: ohmyzsh
+
+- name: Install oh-my-zsh
+  ansible.builtin.shell: curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh
+  when: not ohmyzsh.stat.exists
+
+- name: Install powerlevel10k
+  ansible.builtin.git:
+    repo: 'https://github.com/romkatv/powerlevel10k.git'
+    dest: "{{ home }}/.oh-my-zsh/custom/themes/powerlevel10k"
+    version: HEAD
+
+- name: Install zsh-syntax-highlighting
+  ansible.builtin.git:
+    repo: "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+    dest: "{{ home }}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+    version: HEAD
+
+- name: Install fzf-tab
+  ansible.builtin.git:
+    repo: "https://github.com/Aloxaf/fzf-tab.git"
+    dest: "{{ home }}/.oh-my-zsh/custom/plugins/fzf-tab"
+    version: HEAD
+
+- name: Copy .zshrc file
+  ansible.builtin.copy:
+    src: ".zshrc"
+    dest: "{{ home }}/.zshrc"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: '0644'
+
+- name: Set zsh as default shell
+  ansible.builtin.user:
+    name: "{{ user }}"
+    shell: /usr/bin/zsh
+  become: true

@@ -1,6 +1,9 @@
 ---
 - name: Setup Workstation
   hosts: targets
-  become: true
+  vars:
+    home: "{{ lookup('ansible.builtin.env', 'HOME') }}"
+    user: "{{ lookup('ansible.builtin.env', 'USER') }}"
   roles:
     - package-manager
+    - oh-my-zsh

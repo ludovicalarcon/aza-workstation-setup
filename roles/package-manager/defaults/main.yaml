@@ -1,5 +1,6 @@
 ---
 packages:
+  - yay
   - base-devel
   - git
   - neovim
@@ -9,3 +10,7 @@ packages:
   - chromium
   - plank
   - gnome-tweak-tool
+  - tmux
+  - zsh
+  - ttf-hack-nerd
+  - ttf-nerd-fonts-symbols-2048-em
