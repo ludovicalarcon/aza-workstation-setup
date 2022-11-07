@@ -7,3 +7,4 @@
   roles:
     - package-manager
     - oh-my-zsh
+    - tools

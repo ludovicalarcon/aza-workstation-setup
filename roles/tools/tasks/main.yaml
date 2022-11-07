@@ -1,0 +1,58 @@
+---
+- name: Create a tmp dir for download
+  ansible.builtin.file:
+    path: "{{ tmp_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Install kubectl
+  ansible.builtin.get_url:
+    url: "https://dl.k8s.io/release/{{ kubectl_version }}/bin/{{ ansible_system | lower }}/amd64/kubectl"
+    dest: "{{ bin_dir }}"
+    mode: '0744'
+    owner: "{{ user }}"
+  become: true
+
+- name: Install tools from github release
+  ansible.builtin.include_tasks: github_release.yaml
+  with_items: "{{ github_release }}"
+
+- name: Install terraform
+  block:
+    - name: Download terraform
+      ansible.builtin.get_url:
+        url: "https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_linux_amd64.zip"
+        dest: "{{ tmp_dir }}"
+        mode: '0644'
+      register: ret
+
+    - name: Extract terraform
+      ansible.builtin.unarchive:
+        src: "{{ ret.dest }}"
+        dest: "{{ bin_dir }}"
+        include:
+          - terraform
+        mode: '0744'
+        owner: "{{ user }}"
+      become: true
+
+- name: Install golang
+  block:
+    - name: Download golang
+      ansible.builtin.get_url:
+        url: "https://go.dev/dl/go{{ go_version }}.linux-amd64.tar.gz"
+        dest: "{{ tmp_dir }}"
+        mode: '0644'
+      register: ret
+
+    - name: Extract golang
+      ansible.builtin.unarchive:
+        src: "{{ ret.dest }}"
+        dest: "/usr/local"
+        owner: "{{ user }}"
+      become: true
+
+    - name: Delete tmp dir
+      ansible.builtin.file:
+        path: "{{ tmp_dir }}"
+        state: absent

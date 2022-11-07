@@ -1,0 +1,10 @@
+---
+tmp_dir: "/tmp/tools"
+bin_dir: "/usr/local/bin"
+kubectl_version: "v1.25.3"
+terraform_version: "1.3.4"
+go_version: "1.19.3"
+
+github_release:
+  - { user: hidetatz, name: kubecolor }
+  - { user: norwoodj, name: helm-docs }

@@ -2,3 +2,5 @@
 warn_list:
   - role-name
   - latest[git]
+  - yaml[line-length]
+  - name[template]
