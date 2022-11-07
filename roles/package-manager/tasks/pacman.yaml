@@ -1,9 +1,9 @@
 ---
 - name: Sync package manager repo
-  pacman:
-    update_cache: yes
+  community.general.pacman:
+    update_cache: true
 
 - name: Install packages
-  pacman:
+  community.general.pacman:
     name: "{{ packages }}"
     state: present

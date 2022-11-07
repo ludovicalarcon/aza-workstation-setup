@@ -5,7 +5,7 @@
   register: ohmyzsh
 
 - name: Install oh-my-zsh
-  ansible.builtin.shell: curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh
+  ansible.builtin.shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
   when: not ohmyzsh.stat.exists
 
 - name: Install powerlevel10k
