@@ -14,3 +14,4 @@ packages:
   - zsh
   - ttf-hack-nerd
   - ttf-nerd-fonts-symbols-2048-em
+  - ansible-lint
