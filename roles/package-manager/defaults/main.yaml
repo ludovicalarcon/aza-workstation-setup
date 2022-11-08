@@ -16,3 +16,7 @@ packages:
   - ttf-nerd-fonts-symbols-2048-em
   - ansible-lint
   - python-pip
+  - helm
+  - helmfile
+  - kubectx
+  - argocd
