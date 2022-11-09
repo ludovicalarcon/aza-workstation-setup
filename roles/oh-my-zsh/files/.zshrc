@@ -106,6 +106,7 @@ source $ZSH/oh-my-zsh.sh
 
 alias vi="vim"
 alias vim="nvim"
+alias md="ghostwriter"
 
 # get zsh complete kubectl
 source <(kubectl completion zsh)

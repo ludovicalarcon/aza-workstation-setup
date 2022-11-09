@@ -1,5 +1,5 @@
 ---
-packages:
+pacman_packages:
   - yay
   - base-devel
   - git
@@ -20,3 +20,5 @@ packages:
   - helmfile
   - kubectx
   - argocd
+  - ghostwriter
+  - hunspell-en_US
