@@ -23,6 +23,7 @@ Plug 'zhimsel/vim-stay'
 " cosmetics
 Plug 'ryanoasis/vim-devicons'
 Plug 'mhartington/oceanic-next'
+Plugin 'frazrepo/vim-rainbow'
 
 call plug#end()
 
