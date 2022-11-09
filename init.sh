@@ -11,6 +11,10 @@ then
   fi
   echo "Runing playbook"
   ansible-playbook workstation-setup.yaml -K
+  if ! command -v az &> /dev/null
+  then
+    curl -L https://aka.ms/InstallAzureCli | bash
+  fi
 else
   echo "Distro not supported"
 fi
