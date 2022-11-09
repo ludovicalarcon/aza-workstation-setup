@@ -5,7 +5,7 @@
     home: "{{ lookup('ansible.builtin.env', 'HOME') }}"
     user: "{{ lookup('ansible.builtin.env', 'USER') }}"
   roles:
-    - package-manager
-    - oh-my-zsh
+    - package_manager
+    - oh_my_zsh
     - nvim
     - tools

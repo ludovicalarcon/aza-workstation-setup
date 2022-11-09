@@ -10,7 +10,7 @@ then
     ansible-galaxy collection install community.general
   fi
   echo "Runing playbook"
-  ansible-playbook workstation-setup.yaml -K
+  ansible-playbook workstation_setup.yaml -K
   if ! command -v az &> /dev/null
   then
     curl -L https://aka.ms/InstallAzureCli | bash
