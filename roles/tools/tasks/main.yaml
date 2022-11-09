@@ -52,7 +52,17 @@
         owner: "{{ user }}"
       become: true
 
-    - name: Delete tmp dir
-      ansible.builtin.file:
-        path: "{{ tmp_dir }}"
-        state: absent
+- name: Run helm env
+  ansible.builtin.command: helm env HELM_PLUGINS
+  register: helm_env
+  changed_when: helm_env.rc != 0
+
+- name: Install helm-unittest
+  ansible.builtin.command: helm plugin install https://github.com/quintush/helm-unittest
+  args:
+    creates: "{{ helm_env.stdout_lines.0 }}/helm-unittest"
+
+- name: Delete tmp dir
+  ansible.builtin.file:
+    path: "{{ tmp_dir }}"
+    state: absent
