@@ -24,4 +24,5 @@
           - "{{ item.name }}"
         mode: '0744'
         owner: "{{ user }}"
+        group: "{{ user }}"
       become: true

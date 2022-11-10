@@ -1,0 +1,47 @@
+---
+- name: Install krew
+  block:
+    - name: Download krew
+      ansible.builtin.get_url:
+        url: "https://github.com/kubernetes-sigs/krew/releases/latest/download/krew-linux_amd64.tar.gz"
+        dest: "{{ tmp_dir }}"
+        mode: '0644'
+      register: ret
+
+    - name: Extract krew
+      ansible.builtin.unarchive:
+        src: "{{ ret.dest }}"
+        dest: "{{ tmp_dir }}"
+        mode: '0744'
+        owner: "{{ user }}"
+        group: "{{ user }}"
+
+    - name: Install krew
+      ansible.builtin.command: "{{ tmp_dir }}/krew-linux_amd64 install krew"
+      register: ret
+      changed_when: ret.rc != 0
+
+- name: Install view-secret
+  ansible.builtin.command: kubectl krew install view-secret
+  register: ret
+  changed_when: ret.rc != 0
+
+- name: Install deprecations
+  ansible.builtin.command: kubectl krew install deprecations
+  register: ret
+  changed_when: ret.rc != 0
+
+- name: Install get-all
+  ansible.builtin.command: kubectl krew install get-all
+  register: ret
+  changed_when: ret.rc != 0
+
+- name: Install graph
+  ansible.builtin.command: kubectl krew install graph
+  register: ret
+  changed_when: ret.rc != 0
+
+- name: Install ktop
+  ansible.builtin.command: kubectl krew install ktop
+  register: ret
+  changed_when: ret.rc != 0

@@ -11,6 +11,7 @@
     dest: "{{ bin_dir }}"
     mode: '0744'
     owner: "{{ user }}"
+    group: "{{ user }}"
   become: true
 
 - name: Install tools from github release
@@ -34,6 +35,7 @@
           - terraform
         mode: '0744'
         owner: "{{ user }}"
+        group: "{{ user }}"
       become: true
 
 - name: Install golang
@@ -52,6 +54,15 @@
         owner: "{{ user }}"
       become: true
 
+- name: Download stern
+  ansible.builtin.get_url:
+    url: "https://github.com/wercker/stern/releases/latest/download/stern_linux_amd64"
+    dest: "{{ bin_dir }}/stern"
+    mode: '0744'
+    owner: "{{ user }}"
+    group: "{{ user }}"
+  become: true
+
 - name: Run helm env
   ansible.builtin.command: helm env HELM_PLUGINS
   register: helm_env
@@ -61,6 +72,9 @@
   ansible.builtin.command: helm plugin install https://github.com/quintush/helm-unittest
   args:
     creates: "{{ helm_env.stdout_lines.0 }}/helm-unittest"
+
+- name: Install krew plugins
+  ansible.builtin.include_tasks: krew.yaml
 
 - name: Delete tmp dir
   ansible.builtin.file:

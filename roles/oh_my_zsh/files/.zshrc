@@ -133,3 +133,7 @@ export EDITOR="nvim"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+export PATH=$PATH:$HOME/bin
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+source "${HOME}/lib/azure-cli/az.completion"
