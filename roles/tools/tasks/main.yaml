@@ -54,15 +54,6 @@
         owner: "{{ user }}"
       become: true
 
-- name: Download stern
-  ansible.builtin.get_url:
-    url: "https://github.com/wercker/stern/releases/latest/download/stern_linux_amd64"
-    dest: "{{ bin_dir }}/stern"
-    mode: '0744'
-    owner: "{{ user }}"
-    group: "{{ user }}"
-  become: true
-
 - name: Run helm env
   ansible.builtin.command: helm env HELM_PLUGINS
   register: helm_env
