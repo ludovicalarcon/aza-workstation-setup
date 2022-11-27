@@ -22,3 +22,4 @@ pacman_packages:
   - argocd
   - ghostwriter
   - hunspell-en_US
+  - flameshot
