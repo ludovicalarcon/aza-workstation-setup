@@ -11,12 +11,21 @@
 
     - name: "Download {{ item.name }}"
       ansible.builtin.get_url:
-        url: "https://github.com/{{ item.user }}/{{ item.name }}/releases/download/{{ version.json.tag_name }}/{{ item.name }}_{{ version.json.tag_name[1:] }}_{{ ansible_system }}_x86_64.tar.gz"
+        url: "https://github.com/{{ item.user }}/{{ item.name }}/releases/download/{{ version.json.tag_name }}/{{ item.name }}_{{ version.json.tag_name[1:] }}_{{ ansible_system }}_{{ item.arch }}.tar.gz"
         dest: "{{ tmp_dir }}"
         mode: '0644'
       register: ret
+      when: not item.lower
 
-    - name: Extract kubecolor
+    - name: "Download {{ item.name }}"
+      ansible.builtin.get_url:
+        url: "https://github.com/{{ item.user }}/{{ item.name }}/releases/download/{{ version.json.tag_name }}/{{ item.name }}_{{ version.json.tag_name[1:] }}_{{ ansible_system | lower }}_{{ item.arch }}.tar.gz"
+        dest: "{{ tmp_dir }}"
+        mode: '0644'
+      register: ret_lower
+      when: item.lower
+
+    - name: "Extract {{ item.name }}"
       ansible.builtin.unarchive:
         src: "{{ ret.dest }}"
         dest: "{{ bin_dir }}"
@@ -26,3 +35,16 @@
         owner: "{{ user }}"
         group: "{{ user }}"
       become: true
+      when: not item.lower
+
+    - name: "Extract {{ item.name }}"
+      ansible.builtin.unarchive:
+        src: "{{ ret_lower.dest }}"
+        dest: "{{ bin_dir }}"
+        include:
+          - "{{ item.name }}"
+        mode: '0744'
+        owner: "{{ user }}"
+        group: "{{ user }}"
+      become: true
+      when: item.lower
