@@ -1,0 +1,16 @@
+---
+- name: Install yq
+  ansible.builtin.get_url:
+    url: "https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64"
+    dest: "{{ bin_dir }}/yq"
+    mode: '0744'
+    owner: "{{ user }}"
+    group: "{{ user }}"
+
+- name: Install argocd
+  ansible.builtin.get_url:
+    url: "https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64"
+    dest: "{{ bin_dir }}/argocd"
+    mode: '0744'
+    owner: "{{ user }}"
+    group: "{{ user }}"
