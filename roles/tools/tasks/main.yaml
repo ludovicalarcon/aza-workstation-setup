@@ -67,6 +67,12 @@
 - name: Install krew plugins
   ansible.builtin.include_tasks: krew.yaml
 
+- name: Install tools for Debian OS_FAMILY
+  ansible.builtin.include_tasks: debian_tools.yaml
+  when: ansible_os_family == "Debian"
+  vars:
+    ansible_become: true
+
 - name: Delete tmp dir
   ansible.builtin.file:
     path: "{{ tmp_dir }}"

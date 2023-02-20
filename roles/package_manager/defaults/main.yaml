@@ -17,9 +17,22 @@ pacman_packages:
   - ansible-lint
   - python-pip
   - helm
-  - helmfile
   - kubectx
   - argocd
   - ghostwriter
   - hunspell-en_US
   - flameshot
+
+apt_packages:
+  - git
+  - build-essential
+  - neovim
+  - jq
+  - fzf
+  - tmux
+  - zsh
+  - fonts-hack-ttf
+  - ansible-lint
+  - python-pip
+  - helm
+  - unzip

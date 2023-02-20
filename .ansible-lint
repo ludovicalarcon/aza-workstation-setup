@@ -4,3 +4,5 @@ warn_list:
   - latest[git]
   - yaml[line-length]
   - name[template]
+  - command-instead-of-module
+  - risky-shell-pipe
