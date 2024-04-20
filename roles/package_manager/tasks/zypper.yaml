@@ -1,0 +1,29 @@
+---
+- name: Add Microsoft package
+  ansible.builtin.shell: |
+    sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+    echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/zypp/repos.d/vscode.repo
+  register: ret
+  changed_when: ret.rc != 0
+
+- name: Refresh repo
+  community.general.zypper_repository:
+    repo: '*'
+    runrefresh: true
+
+- name: Install packages
+  community.general.zypper:
+    name: "{{ package_manager_zypper_packages }}"
+    state: present
+
+- name: Install Floorp from Flathub
+  ansible.builtin.shell: |
+    flatpak install -y flathub one.ablaze.floorp
+  register: ret
+  changed_when: ret.rc != 0
+
+- name: Install KVM tools
+  ansible.builtin.shell: |
+    zypper install -t pattern kvm_tools
+  register: ret
+  changed_when: ret.rc != 0

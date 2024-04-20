@@ -12,5 +12,5 @@
 
 - name: Install packages
   ansible.builtin.apt:
-    name: "{{ apt_packages }}"
+    name: "{{ package_manager_apt_packages }}"
     state: present
