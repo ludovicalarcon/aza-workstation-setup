@@ -1,0 +1,7 @@
+- name: Copy .tmux.conf file
+  ansible.builtin.copy:
+    src: ".tmux.conf"
+    dest: "{{ home }}/.tmux.conf"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: '0644'

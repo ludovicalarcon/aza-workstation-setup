@@ -1,11 +1,11 @@
 ---
-tmp_dir: "/tmp/tools"
-bin_dir: "/usr/local/bin"
-kubectl_version: "v1.25.3"
-terraform_version: "1.3.4"
-go_version: "1.20.1"
+tools_tmp_dir: "/tmp/tools"
+tools_bin_dir: "/usr/local/bin"
+tools_kubectl_version: "v1.29.1"
+tools_terraform_version: "1.8.1"
+tools_go_version: "1.22.2"
 
-github_release:
+tools_github_release:
   - { user: hidetatz, name: kubecolor, lower: false, arch: x86_64 }
   - { user: norwoodj, name: helm-docs, lower: false, arch: x86_64 }
   - { user: stern, name: stern, lower: true, arch: amd64 }

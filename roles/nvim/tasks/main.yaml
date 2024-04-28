@@ -7,9 +7,9 @@
     group: "{{ user }}"
     mode: '0755'
 
-- name: Copy init.vim
+- name: Copy init.lua
   ansible.builtin.copy:
-    src: "init.vim"
+    src: "init.lua"
     dest: "{{ home }}/.config/nvim"
     owner: "{{ user }}"
     group: "{{ user }}"

@@ -106,7 +106,8 @@ source $ZSH/oh-my-zsh.sh
 
 alias vi="vim"
 alias vim="nvim"
-alias md="ghostwriter"
+alias nerdctl="sudo nerdctl"
+alias code="code-insiders"
 
 # get zsh complete kubectl
 source <(kubectl completion zsh)
@@ -127,7 +128,7 @@ b64decode () {
   echo $1 | base64 -d
 }
 
-export PATH=$PATH:/usr/local/go/bin:$HOME/.local/bin:/usr/local/bin
+export PATH=$PATH:/usr/local/go/bin:$HOME/.local/bin:/usr/local/bin:$HOME/bin:$HOME/go/bin
 export EDITOR="nvim"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh

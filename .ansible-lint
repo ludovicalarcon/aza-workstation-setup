@@ -6,3 +6,6 @@ warn_list:
   - name[template]
   - command-instead-of-module
   - risky-shell-pipe
+
+exclude_paths:
+  - .github

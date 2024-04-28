@@ -1,0 +1,40 @@
+---
+- name: Check existence of Konsole
+  ansible.builtin.stat:
+    path: "{{ home }}/.local/share/konsole"
+  register: konsole
+
+- name: Configure Konsole
+  when: konsole.stat.exists
+  block:
+    - name: Copy konsole picture
+      ansible.builtin.copy:
+        src: "gopher_jedi.png"
+        dest: "{{ home }}/Pictures/gopher_jedi.png"
+        owner: "{{ user }}"
+        group: "{{ user }}"
+        mode: '0644'
+
+    - name: Copy profile file
+      ansible.builtin.copy:
+        src: "aza.profile"
+        dest: "{{ home }}/.local/share/konsole/aza.profile"
+        owner: "{{ user }}"
+        group: "{{ user }}"
+        mode: '0644'
+
+    - name: Copy colorscheme file
+      ansible.builtin.copy:
+        src: "Aza.colorscheme"
+        dest: "{{ home }}/.local/share/konsole/Aza.colorscheme"
+        owner: "{{ user }}"
+        group: "{{ user }}"
+        mode: '0644'
+
+- name: Copy wallpaper
+  ansible.builtin.copy:
+    src: "golang.jpg"
+    dest: "{{ home }}/Pictures/golang.jpg"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: '0644'

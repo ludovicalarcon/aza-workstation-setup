@@ -1,5 +1,5 @@
 ---
-pacman_packages:
+package_manager_pacman_packages:
   - yay
   - base-devel
   - git
@@ -23,7 +23,7 @@ pacman_packages:
   - hunspell-en_US
   - flameshot
 
-apt_packages:
+package_manager_apt_packages:
   - git
   - build-essential
   - neovim
@@ -36,3 +36,22 @@ apt_packages:
   - python-pip
   - helm
   - unzip
+
+package_manager_zypper_packages:
+  - git
+  - gcc
+  - libffi-devel
+  - python3
+  - libopenssl-devel
+  - flameshot
+  - neovim
+  - fzf
+  - zsh
+  - tmux
+  - yq
+  - jq
+  - ansible-lint
+  - helm
+  - unzip
+  - code-insiders
+  - azure-cli

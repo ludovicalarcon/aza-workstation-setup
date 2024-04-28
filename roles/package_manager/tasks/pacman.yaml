@@ -5,5 +5,5 @@
 
 - name: Install packages
   community.general.pacman:
-    name: "{{ pacman_packages }}"
+    name: "{{ package_manager_pacman_packages }}"
     state: present

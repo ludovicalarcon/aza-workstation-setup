@@ -1,0 +1,97 @@
+- name: Install nerdctl from github release
+  block:
+    - name: Check if nerdctl cli already present
+      ansible.builtin.stat:
+        path: "/usr/nerdctl"
+      register: nerdctl
+
+    - name: Get latest version
+      when: not nerdctl.stat.exists
+      ansible.builtin.uri:
+        url: "https://github.com/containerd/nerdctl/releases/latest/"
+        return_content: true
+        headers:
+          Accept: "application/json"
+      register: version
+
+    - name: Download nerdctl
+      when: not nerdctl.stat.exists
+      ansible.builtin.get_url:
+        url: "https://github.com/containerd/nerdctl/releases/download/{{ version.json.tag_name }}/nerdctl-full-{{ version.json.tag_name[1:] }}-{{ ansible_system | lower }}-amd64.tar.gz"
+        dest: "{{ tools_tmp_dir }}"
+        mode: '0644'
+      register: ret_nerdctl
+
+    - name: "Extract nerdctl"
+      when: not nerdctl.stat.exists
+      ansible.builtin.unarchive:
+        src: "{{ ret_nerdctl.dest }}"
+        dest: "/usr"
+      become: true
+
+    - name: Activate nerdctl & buildkit
+      when: not nerdctl.stat.exists
+      ansible.builtin.shell: |
+        sudo systemctl enable --now containerd
+        sudo systemctl enable --now buildkit
+      register: ret
+      changed_when: ret.rc != 0
+      become: true
+
+    - name: Check existence of /etc/buildkit
+      ansible.builtin.stat:
+        path: "/etc/buildkit"
+      register: buildkit
+      when: not nerdctl.stat.exists
+
+    - name: Create /etc/buildkit
+      when: not buildkit.stat.exists
+      ansible.builtin.file:
+        path: '/etc/buildkit'
+        state: directory
+        mode: '0755'
+
+    - name: Copy buildkitd.toml
+      ansible.builtin.copy:
+        src: "buildkitd.toml"
+        dest: "/etc/buildkit/buildkitd.toml"
+        owner: "{{ user }}"
+        group: "{{ user }}"
+        mode: '0644'
+      when: not nerdctl.stat.exists
+
+- name: Install argocd cli
+  block:
+    - name: Check if argocd cli already present
+      ansible.builtin.stat:
+        path: "{{ tools_bin_dir }}/argocd"
+      register: argocd
+
+    - name: Download argocd
+      ansible.builtin.get_url:
+        url: "https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64"
+        dest: "{{ tools_bin_dir }}/argocd"
+        mode: '0755'
+        owner: "{{ user }}"
+        group: "{{ user }}"
+      when: not argocd.stat.exists
+
+- name: Install Taskfile
+  block:
+    - name: Check if task cli already present
+      ansible.builtin.stat:
+        path: "{{ tools_bin_dir }}/task"
+      register: taskfile
+
+    - name: Download Taskfile
+      when: not taskfile.stat.exists
+      ansible.builtin.shell: "sh -c \"$(curl --location https://taskfile.dev/install.sh)\" -- -d -b {{ tools_bin_dir }}"
+      register: ret
+      changed_when: ret.rc != 0
+      become: true
+
+- name: Add "{{ user }}" to libvirt group
+  ansible.builtin.user:
+    name: "{{ user }}"
+    groups: libvirt
+    append: true
